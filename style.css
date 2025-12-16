@@ -183,3 +183,49 @@ header .navbar {
   height: auto;
   display: block;
 }
+
+.about-section {
+  padding: 120px 0;
+  background: var(--light-pink-color);
+}
+
+.about-section .section-content {
+  display: flex;
+  gap: 50px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.about-section .about-image-wrapper .about-image {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: var(--border-radius-circle);
+}
+
+.about-section .about-details {
+  max-width: 50%;
+  text-align: center;
+}
+
+.about-section .about-details .text {
+  line-height: 30px;
+  margin: 50px 0 30px;
+  font-size: var(--font-size-m);
+}
+
+.about-section .social-link-list {
+  display: flex;
+  gap: 25px;
+  justify-content: center;
+}
+
+.about-section .social-link-list .social-link {
+  font-size: var(--font-size-l);
+  color: var(--primary-color);
+  transition: 0.2s ease;
+}
+
+.about-section .social-link-list .social-link:hover {
+  color: var(--secondary-color);
+}
