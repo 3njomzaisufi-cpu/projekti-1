@@ -69,3 +69,46 @@ html {
   border-radius: var(--border-radius-s);
   background: var(--secondary-color);
 }
+header {
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+  background: var(--primary-color);
+}
+
+header .navbar {
+  display: flex;
+  padding: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar .nav-logo .logo-text {
+  color: var(--white-color);
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semi-bold);
+}
+
+.navbar .nav-menu {
+  display: flex;
+  gap: 25px;
+}
+
+.navbar .nav-menu .nav-link {
+  padding: 10px 18px;
+  color: var(--white-color);
+  background: none;
+  border-radius: var(--border-radius-m);
+  font-size: var(--font-size-m);
+  transition: 0.3s ease;
+}
+
+.navbar .nav-menu .nav-link:hover {
+  background: var(--secondary-color);
+  color: var(--white-color);
+}
+
+.navbar :where(#menu-close-button, #menu-open-button) {
+  display: none;
+}
+
