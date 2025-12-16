@@ -268,3 +268,66 @@ header .navbar {
 .menu-section .menu-list .menu-item .text {
   font-size: var(--font-size-m);
 
+  .order-section {
+  padding: 50px 0 100px;
+  background-color: var(--light-pink-color);
+}
+
+.order-section .section-content {
+  display: flex;
+  gap: 48px;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.order-section .order-now-list .order-info {
+  display: flex;
+  gap: 20px;
+  margin: 20px;
+  align-items: center;
+}
+
+.order-section .order-now-list .order-info i {
+  font-size: var(--font-size-m);
+}
+
+.order-section .order-form .form-input {
+  width: 100%;
+  height: 50px;
+  padding: 0 12px;
+  margin-bottom: 16px;
+  outline: none;
+  background: var(--white-color);
+  border-radius: var(--border-radius-s);
+  border: 1px solid var(--medium-gray-color);
+}
+
+.order-section .order-form {
+  max-width: 50%;
+}
+
+.order-section .order-form .form-input:focus {
+  border-color: var(--secondary-color);
+}
+
+.order-section .order-form textarea.form-input {
+  height: 100px;
+  padding: 12px;
+  resize: vertical;
+}
+
+.order-section .order-form .submit-button {
+  padding: 10px 26px;
+  margin-top: 10px;
+  color: var(--white-color);
+  font-size: var(--font-size-m);
+  background: var(--primary-color);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--border-radius-m);
+  transition: 0.3s ease;
+}
+
+.order-section .order-form .submit-button:hover {
+  color: var(--primary-color);
+  background: transparent;
+}
