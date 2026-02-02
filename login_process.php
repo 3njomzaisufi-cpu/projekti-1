@@ -43,3 +43,4 @@ class User {
 $user = new User($_POST['username'] ?? '', $_POST['password'] ?? '');
 $user->validateInput();
 $user->authenticate();
+

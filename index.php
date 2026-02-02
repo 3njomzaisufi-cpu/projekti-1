@@ -1,5 +1,73 @@
 <?php
 session_start();
+
+class MenuItem {
+    public $name;
+    public $image;
+    public $desc;
+    public $price;
+
+    public function __construct($name, $image, $desc, $price) {
+        $this->name = $name;
+        $this->image = $image;
+        $this->desc = $desc;
+        $this->price = $price;
+    }
+}
+
+class OrderManager {
+    private $orders;
+
+    public function __construct() {
+        if (!isset($_SESSION['all_orders'])) $_SESSION['all_orders'] = [];
+        $this->orders = &$_SESSION['all_orders'];
+    }
+
+    public function addOrder($user, MenuItem $item) {
+        $this->orders[] = ['id'=>uniqid(),'user'=>$user,'produkt'=>$item->name,'price'=>$item->price];
+    }
+
+    public function deleteOrder($id) {
+        $this->orders = array_values(array_filter($this->orders, fn($o)=>$o['id'] !== $id));
+    }
+
+    public function completeOrders() {
+        $this->orders = [];
+    }
+
+    public function getOrders() {
+        return $this->orders;
+    }
+}
+
+$menuItems = [
+    new MenuItem('Hamburger','images/burger-frenchfries.png','Mish viçi i pjekur, i lëngshëm dhe i shijshëm, me sallatë dhe salcë speciale.',5.5),
+    new MenuItem('Special Combo','images/special-combo.png','Burger me patate të skuqura dhe një pije të ftohtë.',7.0),
+    new MenuItem('Pizza','images/pizza1.png','Pizza e sapo pjekur me djathë mozzarella dhe salcë domate.',8.5),
+    new MenuItem('Veggie Pizza','images/vegie.jpg','Pizza me perime të freskëta dhe djathë mozzarella.',7.5),
+    new MenuItem('Chicken Wrap','images/chicken.png','Tortilla me pulë të pjekur, perime të freskëta dhe salcë kremozë.',6.0),
+    new MenuItem('Beef Tortilla','images/beeef.jpg','Tortilla me mish viçi të spërkatur dhe perime.',6.5),
+    new MenuItem('Baguette Sandwich','images/sandwich.jpg.png','Baguette krokante me mish, perime dhe salcë.',5.0),
+    new MenuItem('French Fries','images/french.jpg','Patate të skuqura të arta dhe krokante.',3.0),
+    new MenuItem('Chicken Nuggets','images/nugget.jpg','Pulë të skuqur, e butë brenda dhe krokante jashtë.',4.0)
+];
+
+$orderManager = new OrderManager();
+$showLogin = !isset($_SESSION['user_id']);
+$username = $_SESSION['user_id'] ?? '';
+
+if (isset($_POST['produkt'])) {
+    foreach ($menuItems as $item) {
+        if ($item->name === $_POST['produkt']) {
+            $orderManager->addOrder($username ?? 'Guest', $item);
+            break;
+        }
+    }
+}
+
+if (isset($_POST['delete_id'])) $orderManager->deleteOrder($_POST['delete_id']);
+if (isset($_POST['complete_order'])) $orderManager->completeOrders();
+$orders = $orderManager->getOrders();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,36 +98,6 @@ session_start();
 </div>
 </div>
 </section>
-<?php
-$menuItems = [
-['name'=>'Hamburger','image'=>'images/burger-frenchfries.png','desc'=>'Mish viçi i pjekur, i lëngshëm dhe i shijshëm, me sallatë dhe salcë speciale.','price'=>5.5],
-['name'=>'Special Combo','image'=>'images/special-combo.png','desc'=>'Burger me patate të skuqura dhe një pije të ftohtë.','price'=>7.0],
-['name'=>'Pizza','image'=>'images/pizza1.png','desc'=>'Pizza e sapo pjekur me djathë mozzarella dhe salcë domate.','price'=>8.5],
-['name'=>'Veggie Pizza','image'=>'images/vegie.jpg','desc'=>'Pizza me perime të freskëta dhe djathë mozzarella.','price'=>7.5],
-['name'=>'Chicken Wrap','image'=>'images/chicken.png','desc'=>'Tortilla me pulë të pjekur, perime të freskëta dhe salcë kremozë.','price'=>6.0],
-['name'=>'Beef Tortilla','image'=>'images/beeef.jpg','desc'=>'Tortilla me mish viçi të spërkatur dhe perime.','price'=>6.5],
-['name'=>'Baguette Sandwich','image'=>'images/sandwich.jpg.png','desc'=>'Baguette krokante me mish, perime dhe salcë.','price'=>5.0],
-['name'=>'French Fries','image'=>'images/french.jpg','desc'=>'Patate të skuqura të arta dhe krokante.','price'=>3.0],
-['name'=>'Chicken Nuggets','image'=>'images/nugget.jpg','desc'=>'Pulë të skuqur, e butë brenda dhe krokante jashtë.','price'=>4.0]
-];
-if (!isset($_SESSION['all_orders'])) $_SESSION['all_orders'] = [];
-if (isset($_POST['produkt'])) {
-foreach ($menuItems as $item) {
-if ($item['name'] === $_POST['produkt']) {
-$_SESSION['all_orders'][] = ['id'=>uniqid(),'user'=>$_SESSION['user_id'] ?? 'Guest','produkt'=>$item['name'],'price'=>$item['price']];
-break;
-}
-}
-}
-if (isset($_POST['delete_id'])) {
-$delete_id = $_POST['delete_id'];
-$_SESSION['all_orders'] = array_values(array_filter($_SESSION['all_orders'], fn($o)=>$o['id'] !== $delete_id));
-}
-if (isset($_POST['complete_order'])) $_SESSION['all_orders'] = [];
-$showLogin = !isset($_SESSION['user_id']);
-$username = $_SESSION['user_id'] ?? '';
-$orders = $_SESSION['all_orders'];
-?>
 
 <?php include 'footer.php'; ?>
 
