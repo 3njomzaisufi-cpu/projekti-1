@@ -12,3 +12,28 @@ menuCloseButton.addEventListener("click", () => {
 navLinks.forEach(link => {
   link.addEventListener("click", () => menuCloseButton.click());
 });
+const swiper = new Swiper('.feedback-swiper', {
+  loop: true,
+  grabCursor: true,
+  spaceBetween: 25,
+  
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+    dynamicBullets: true,
+  },
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+  autoplay: {
+    delay: 5000,
+    disableOnInteraction: false,
+  },
+  breakpoints: {
+    0: { slidesPerView: 1 },
+    768: { slidesPerView: 2 },
+    1024: { slidesPerView: 3 },
+  }
+});
+
